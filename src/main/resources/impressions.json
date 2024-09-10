@@ -1,0 +1,14 @@
+[
+  {
+    "id": "e9d7fbbd-44f2-4b7f-a83f-cd1911ab3e95",
+    "appId": 123,
+    "countryCode": "US",
+    "advertiserId": 456
+  },
+  {
+    "id": "f1a2c7b5-55f2-4b7f-c83f-cf1919bc4e96",
+    "appId": 124,
+    "countryCode": "CA",
+    "advertiserId": 457
+  }
+]
