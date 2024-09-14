@@ -1,41 +1,40 @@
 package ir.webmetric.AdInsight.controller;
 
-
-import ir.webmetric.AdInsight.model.Click;
+import ir.webmetric.AdInsight.Dto.Metrics;
+import ir.webmetric.AdInsight.Dto.RecommendedAdvertisers;
 import ir.webmetric.AdInsight.model.Impression;
+import ir.webmetric.AdInsight.service.AdInsightService;
 import ir.webmetric.AdInsight.service.FileReaderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/api/data")
+@RequestMapping("/api")
+@AllArgsConstructor
 public class AppController {
 
-    @Autowired
     private FileReaderService fileReaderService;
+    private AdInsightService adInsightService;
 
-    @GetMapping("/impressions")
-    public List<Impression> getImpressions() throws IOException {
-        return fileReaderService.readImpressions("src/main/resources/impressions.json");
-    }
-
-    @GetMapping("/clicks")
-    public List<Click> getClicks() throws IOException {
-        return fileReaderService.readClicks("src/main/resources/clicks.json");
-    }
-
-    @GetMapping("/impressions")
-    public List<Map<String, Object>> getImpressionsClicksSummary() throws IOException {
-        return fileReaderService.getImpressionsClicksSummary("src/main/resources/impressions.json", "src/main/resources/clicks.json");
+    @PostMapping("/impressions")
+    public List<Impression> getImpressions(
+            @RequestParam(name = "impression_file_name", required = false,
+                    defaultValue = "src/main/resources/impressions.json") String impressionFileName,
+            @RequestParam(name = "click_file_name", required = false,
+                    defaultValue = "src/main/resources/clicks.json") String clickFileName) {
+        return fileReaderService.readEventFiles(impressionFileName, clickFileName);
     }
 
     @GetMapping("/advertisers")
-    public List<Map<String, Object>> getRecommendedAdvertisers() throws IOException {
-        return fileReaderService.getRecommendedAdvertisers("src/main/resources/impressions.json");
+    public List<RecommendedAdvertisers> getRecommendedAdvertisers() {
+        return adInsightService.getRecommendedAdvertisers();
+    }
+
+    @GetMapping("/metrics")
+    public List<Metrics> aggregateMetrics() {
+        return adInsightService.aggregateMetrics();
     }
 }
 

@@ -2,6 +2,10 @@
 
 **AdInsight** is a Spring Boot application designed to provide insights into advertisement impressions and clicks. It processes two JSON files — one containing ad impressions and the other tracking ad clicks — to generate summaries that include aggregated impressions, clicks, revenue, and recommended advertisers by application and country.
 
+# **API Docs**
+
+http://localhost:8080/api-doc
+
 ## **Features**
 
 - **Impressions, Clicks, and Revenue Summary:**
